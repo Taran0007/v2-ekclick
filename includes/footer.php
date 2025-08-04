@@ -22,5 +22,71 @@
     <?php if (isset($extra_js)): ?>
         <?php echo $extra_js; ?>
     <?php endif; ?>
+
+    <!-- Modern Footer -->
+<footer class="bg-dark text-white pt-5 pb-4">
+    <div class="container text-center text-md-left">
+        <div class="row text-center text-md-left">
+
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-danger">Ek-Click</h5>
+                <p>Your trusted multi-vendor local delivery service platform, connecting you with local stores for fast and reliable delivery of everything you need.</p>
+            </div>
+
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-danger">Quick Links</h5>
+                <p><a href="#features" class="text-white" style="text-decoration: none;">Features</a></p>
+                <p><a href="#how-it-works" class="text-white" style="text-decoration: none;">How it Works</a></p>
+                <p><a href="#contact" class="text-white" style="text-decoration: none;">Contact</a></p>
+                <p><a href="<?php echo getBaseUrl(); ?>/register.php" class="text-white" style="text-decoration: none;">Sign Up</a></p>
+            </div>
+
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-danger">Business Docs</h5>
+                <p><a href="<?php echo getBaseUrl(); ?>/business-docs.php" class="text-white" style="text-decoration: none;">View All Documents</a></p>
+                <p><a href="<?php echo getBaseUrl(); ?>/docs/company-profile.pdf" target="_blank" class="text-white" style="text-decoration: none;">Company Profile</a></p>
+                <p><a href="<?php echo getBaseUrl(); ?>/docs/business-approval.pdf" target="_blank" class="text-white" style="text-decoration: none;">Business Approval</a></p>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-danger">Contact</h5>
+                <p><i class="fas fa-home mr-3"></i> Phullanwal main market, Near Shri Guru Ravidas ji Gurudwara Sahib, 141013.</p>
+                <p><i class="fas fa-phone mr-3"></i> +91-7743009266</p>
+            </div>
+        </div>
+
+        <hr class="mb-4">
+
+        <div class="row align-items-center">
+            <div class="col-md-7 col-lg-8">
+                <p> &copy; 2025 Ek-Click. All rights reserved.
+                    Made with <i class="fas fa-heart text-danger"></i> by <a href="mailto:Trnjeet@gmail.com" style="text-decoration: none;"><strong class="text-warning">Taran Jeet</strong></a>
+                </p>
+            </div>
+            <div class="col-md-5 col-lg-4">
+                <div class="text-center text-md-right">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-google-plus"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-linkedin-in"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>

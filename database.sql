@@ -1,4 +1,4 @@
--- E-CLICK Database Schema
+-- Ek-Click Database Schema
 -- Multi-vendor local delivery platform
 -- Compatible with MySQL/MariaDB for shared hosting
 
@@ -299,3 +299,4 @@ INSERT INTO vendors (user_id, shop_name, owner_name, email, phone, category, cui
 -- delivery1: delivery123
 -- customer1: customer123
 -- You need to generate proper password hashes using PHP's password_hash() function
+ 

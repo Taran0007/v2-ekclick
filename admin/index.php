@@ -5,7 +5,7 @@ $current_page = 'dashboard';
 
 // Check if user is admin
 if (getUserRole() !== 'admin') {
-    redirect('login.php');
+    redirect(getBaseUrl() . '/login.php');
 }
 
 // Get statistics
@@ -189,22 +189,22 @@ require_once '../includes/header.php';
             <h5 class="mb-3">Quick Actions</h5>
             <div class="row">
                 <div class="col-md-3 mb-3">
-                    <a href="users.php?action=add" class="btn btn-primary-custom w-100">
+                    <a href="<?php echo getBaseUrl(); ?>/admin/users.php?action=add" class="btn btn-primary-custom w-100">
                         <i class="fas fa-user-plus"></i> Add New User
                     </a>
                 </div>
                 <div class="col-md-3 mb-3">
-                    <a href="vendors.php" class="btn btn-success w-100">
+                    <a href="<?php echo getBaseUrl(); ?>/admin/vendors.php" class="btn btn-success w-100">
                         <i class="fas fa-store"></i> Manage Vendors
                     </a>
                 </div>
                 <div class="col-md-3 mb-3">
-                    <a href="orders.php" class="btn btn-info w-100">
+                    <a href="<?php echo getBaseUrl(); ?>/admin/orders.php" class="btn btn-info w-100">
                         <i class="fas fa-clipboard-list"></i> View Orders
                     </a>
                 </div>
                 <div class="col-md-3 mb-3">
-                    <a href="disputes.php" class="btn btn-warning w-100">
+                    <a href="<?php echo getBaseUrl(); ?>/admin/disputes.php" class="btn btn-warning w-100">
                         <i class="fas fa-exclamation-triangle"></i> Handle Disputes
                     </a>
                 </div>
@@ -213,4 +213,4 @@ require_once '../includes/header.php';
     </div>
 </div>
 
-<?php require_once '../includes/footer.php'; ?>
+

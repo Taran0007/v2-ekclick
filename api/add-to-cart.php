@@ -65,6 +65,17 @@ try {
         UNIQUE KEY unique_user_product (user_id, product_id)
     )");
 
+    // Check if cart already has items from another vendor
+    $stmt = $pdo->prepare("SELECT p.vendor_id FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = ? LIMIT 1");
+    $stmt->execute([$user_id]);
+    $existing_vendor = $stmt->fetch();
+
+    if ($existing_vendor && $existing_vendor['vendor_id'] != $product['vendor_id']) {
+        http_response_code(400);
+        echo json_encode(['error' => 'You can only order from one shop at a time. Please clear your cart first.']);
+        exit;
+    }
+
     // Check if product already in cart
     $stmt = $pdo->prepare("SELECT * FROM cart WHERE user_id = ? AND product_id = ?");
     $stmt->execute([$user_id, $product_id]);

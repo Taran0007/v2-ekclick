@@ -12,6 +12,52 @@ if (getUserRole() !== 'admin') {
 if ($_POST) {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
+            case 'add_vendor':
+                // Sanitize user input
+                $full_name = sanitize($_POST['full_name']);
+                $username = sanitize($_POST['username']);
+                $email = sanitize($_POST['email']);
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $phone = sanitize($_POST['phone']);
+                $address = sanitize($_POST['address']);
+                $city = sanitize($_POST['city']);
+                
+                // Sanitize vendor input
+                $shop_name = sanitize($_POST['shop_name']);
+                $owner_name = sanitize($_POST['owner_name']);
+                $category = sanitize($_POST['category']);
+                $cuisine_type = sanitize($_POST['cuisine_type']);
+                $business_type = sanitize($_POST['business_type']);
+                $shop_description = sanitize($_POST['shop_description']);
+                $delivery_fee = floatval($_POST['delivery_fee']);
+                $min_order_amount = floatval($_POST['min_order_amount']);
+                $delivery_radius = floatval($_POST['delivery_radius']);
+                $estimated_delivery_time = intval($_POST['estimated_delivery_time']);
+                $accepts_custom_orders = isset($_POST['accepts_custom_orders']) ? 1 : 0;
+                
+                try {
+                    // Start transaction
+                    $pdo->beginTransaction();
+                    
+                    // Create user first
+                    $stmt = $pdo->prepare("INSERT INTO users (full_name, username, email, password, phone, role, address, city) VALUES (?, ?, ?, ?, ?, 'vendor', ?, ?)");
+                    $stmt->execute([$full_name, $username, $email, $password, $phone, $address, $city]);
+                    $user_id = $pdo->lastInsertId();
+                    
+                    // Create vendor record
+                    $stmt = $pdo->prepare("INSERT INTO vendors (user_id, shop_name, owner_name, email, phone, category, cuisine_type, business_type, shop_description, address, city, delivery_fee, min_order_amount, delivery_radius, estimated_delivery_time, accepts_custom_orders, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')");
+                    $stmt->execute([$user_id, $shop_name, $owner_name, $email, $phone, $category, $cuisine_type, $business_type, $shop_description, $address, $city, $delivery_fee, $min_order_amount, $delivery_radius, $estimated_delivery_time, $accepts_custom_orders]);
+                    
+                    // Commit transaction
+                    $pdo->commit();
+                    $success = "Vendor created successfully! They can now login with username: $username";
+                } catch (PDOException $e) {
+                    // Rollback transaction on error
+                    $pdo->rollback();
+                    $error = "Error creating vendor: " . $e->getMessage();
+                }
+                break;
+                
             case 'approve':
                 $id = (int)$_POST['id'];
                 try {
@@ -146,6 +192,11 @@ require_once '../includes/header.php';
     <div class="col-md-6">
         <h4>Vendor Management</h4>
         <p class="text-muted">Manage all vendors and their shops</p>
+    </div>
+    <div class="col-md-6 text-end">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVendorModal">
+            <i class="fas fa-plus"></i> Add New Vendor
+        </button>
     </div>
 </div>
 
@@ -330,6 +381,180 @@ require_once '../includes/header.php';
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add New Vendor Modal -->
+<div class="modal fade" id="addVendorModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Vendor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="action" value="add_vendor">
+                    
+                    <!-- User Account Information -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h6 class="text-primary mb-3"><i class="fas fa-user"></i> User Account Information</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="full_name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Username <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="username" required>
+                                <small class="text-muted">This will be used for login</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" name="email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Password <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" name="password" required>
+                                <small class="text-muted">Minimum 6 characters</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Phone <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">City <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="city" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Address <span class="text-danger">*</span></label>
+                                <textarea class="form-control" name="address" rows="2" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shop Information -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h6 class="text-primary mb-3"><i class="fas fa-store"></i> Shop Information</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Shop Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="shop_name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Owner Name</label>
+                                <input type="text" class="form-control" name="owner_name">
+                                <small class="text-muted">Leave blank to use full name</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Category <span class="text-danger">*</span></label>
+                                <select class="form-select" name="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Food">Food & Restaurant</option>
+                                    <option value="Grocery">Grocery</option>
+                                    <option value="Books">Books & Stationery</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Clothing">Clothing</option>
+                                    <option value="Pharmacy">Pharmacy</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Cuisine Type</label>
+                                <input type="text" class="form-control" name="cuisine_type" placeholder="e.g., Fast Food, Italian, Indian">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Business Type</label>
+                                <select class="form-select" name="business_type">
+                                    <option value="">Select Type</option>
+                                    <option value="Restaurant">Restaurant</option>
+                                    <option value="Grocery Store">Grocery Store</option>
+                                    <option value="Book Store">Book Store</option>
+                                    <option value="Electronics Store">Electronics Store</option>
+                                    <option value="Clothing Store">Clothing Store</option>
+                                    <option value="Pharmacy">Pharmacy</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Shop Description</label>
+                                <textarea class="form-control" name="shop_description" rows="3" placeholder="Brief description of your shop and services"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Settings -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h6 class="text-primary mb-3"><i class="fas fa-cog"></i> Business Settings</h6>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Delivery Fee ($)</label>
+                                <input type="number" class="form-control" name="delivery_fee" step="0.01" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Min Order Amount ($)</label>
+                                <input type="number" class="form-control" name="min_order_amount" step="0.01" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Delivery Radius (miles)</label>
+                                <input type="number" class="form-control" name="delivery_radius" step="0.1" min="0" value="5.0">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Est. Delivery Time (min)</label>
+                                <input type="number" class="form-control" name="estimated_delivery_time" min="1" value="30">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="accepts_custom_orders" id="accepts_custom_orders" checked>
+                                <label class="form-check-label" for="accepts_custom_orders">
+                                    Accept Custom Orders
+                                </label>
+                                <small class="text-muted d-block">Allow customers to place custom orders</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Vendor</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

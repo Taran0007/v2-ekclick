@@ -3,7 +3,7 @@ require_once 'config.php';
 
 // Check if user is logged in
 if (!isLoggedIn()) {
-    redirect('login.php');
+    redirect(getBaseUrl() . '/login.php');
 }
 
 // Redirect based on user role
@@ -11,13 +11,13 @@ $role = getUserRole();
 
 switch ($role) {
     case 'admin':
-        redirect('admin/index.php');
+        redirect(getBaseUrl() . '/admin/index.php');
         break;
     case 'vendor':
-        redirect('vendor/index.php');
+        redirect(getBaseUrl() . '/vendor/index.php');
         break;
     case 'delivery':
-        redirect('delivery/index.php');
+        redirect(getBaseUrl() . '/delivery/index.php');
         break;
     case 'user':
         redirect('customer/index.php');

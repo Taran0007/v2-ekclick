@@ -1,0 +1,13 @@
+{
+  "name": "php-deliverease",
+  "version": "1.0.0",
+  "description": "A PHP-based multi-vendor delivery service platform that can be deployed on any shared hosting with PHP and MySQL support.",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

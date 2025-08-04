@@ -1,0 +1,11 @@
+tunnel: deliverease
+credentials-file: C:\Users\TJ SINGH\.cloudflared\credentials.json
+ingress:
+  - service: http://127.0.0.1:80/php-deliverease
+    connectTimeout: 10s
+    originRequest:
+      noTLSVerify: true
+      httpHostHeader: localhost
+      proxyAddress: 127.0.0.1:80
+  - service: http_status:404
+logDirectory: C:\Users\TJ SINGH\.cloudflared\logs

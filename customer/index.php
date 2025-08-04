@@ -428,4 +428,4 @@ function createToastContainer() {
 ';
 ?>
 
-<?php require_once '../includes/footer.php'; ?>
+

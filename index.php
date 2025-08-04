@@ -6,7 +6,7 @@ require_once 'config.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-CLICK - Multi-Vendor Local Delivery Service</title>
+    <title>Ek-Click - Multi-Vendor Local Delivery Service</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -48,6 +48,110 @@ require_once 'config.php';
             transition: transform 0.3s, box-shadow 0.3s;
             background: white;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        /* Directors Section Styles */
+        .directors-section {
+            padding: 80px 0;
+            background: var(--light-bg);
+        }
+
+        .director-card {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .director-image-wrapper {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 25px;
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+        }
+
+        .director-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 0.5s ease;
+        }
+
+        .director-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            animation: pulseCircle 2s infinite;
+        }
+
+        @keyframes pulseCircle {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .director-card:hover .director-image-wrapper {
+            transform: translateY(-10px);
+        }
+
+        .director-card:hover .director-image {
+            transform: scale(1.1);
+        }
+
+        .director-name {
+            color: var(--dark-color);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .director-title {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .director-message {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            position: relative;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .director-message::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.1;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+        }
         }
         
         .feature-card:hover {
@@ -137,7 +241,7 @@ require_once 'config.php';
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.php">
-                <i class="fas fa-truck"></i> E-CLICK
+                <i class="fas fa-truck"></i> Ek-Click
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -155,17 +259,17 @@ require_once 'config.php';
                     </li>
                     <?php if (isLoggedIn()): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php">Dashboard</a>
+                            <a class="nav-link" href="<?php echo getBaseUrl(); ?>/dashboard.php">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Logout</a>
+                            <a class="nav-link" href="<?php echo getBaseUrl(); ?>/logout.php">Logout</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php">Login</a>
+                            <a class="nav-link" href="<?php echo getBaseUrl(); ?>/login.php">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-primary-custom ms-2" href="register.php">Sign Up</a>
+                            <a class="btn btn-primary-custom ms-2" href="<?php echo getBaseUrl(); ?>/register.php">Sign Up</a>
                         </li>
                     <?php endif; ?>
                 </ul>
@@ -185,8 +289,8 @@ require_once 'config.php';
                         <a href="#how-it-works" class="btn btn-outline-light btn-lg btn-custom">Learn More</a>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <img src="https://via.placeholder.com/600x400/FF6B6B/FFFFFF?text=Delivery+Service" alt="Delivery" class="img-fluid rounded-3 shadow-lg">
+                <div class="col-lg-6" style="display: flex; justify-content: center; align-items: center;">
+                    <img src="<?php echo getBaseUrl(); ?>/Images/customer.png" alt="Customer Service" class="img-fluid" style="object-fit: contain; width: 100%; max-height: 500px;">
                 </div>
             </div>
         </div>
@@ -195,7 +299,7 @@ require_once 'config.php';
     <!-- Features Section -->
     <section id="features" class="py-5">
         <div class="container">
-            <h2 class="text-center mb-5">Why Choose E-CLICK?</h2>
+            <h2 class="text-center mb-5">Why Choose Ek-Click?</h2>
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="feature-card">
@@ -225,6 +329,43 @@ require_once 'config.php';
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Directors Section -->
+    <section class="directors-section" id="directors">
+        <div class="container">
+            <h2 class="text-center mb-5">Meet Our Directors</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="director-card">
+                        <div class="director-image-wrapper">
+                            <img src="<?php echo getBaseUrl(); ?>/Images/Tajinderpal Singh.jpeg" alt="Tajinderpal Singh" class="director-image">
+                        </div>
+                        <h3 class="director-name">Tajinderpal Singh</h3>
+                        <div class="director-title">Director & Co-Founder</div>
+                        <div class="director-message">
+                            "Our vision at Ek-Click is to revolutionize local commerce by connecting customers with their favorite shops through seamless technology and reliable delivery services. We're committed to empowering local businesses while providing convenience to our customers."
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="director-card">
+                        <div class="director-image-wrapper">
+                            <img src="<?php echo getBaseUrl(); ?>/Images/Hardeep Singh.jpeg" alt="Hardeep Singh" class="director-image">
+                        </div>
+                        <h3 class="director-name">Hardeep Singh</h3>
+                        <div class="director-title">Director & Co-Founder</div>
+                        <div class="director-message">
+                            "At Ek-Click, we believe in building strong relationships with our community. Our platform is designed to support local businesses while providing an exceptional delivery experience. Together, we're creating a more connected and efficient marketplace."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
         </div>
     </section>
 
@@ -301,7 +442,7 @@ require_once 'config.php';
     <section class="py-5" style="background: var(--primary-color); color: white;">
         <div class="container text-center">
             <h2 class="mb-4">Ready to Get Started?</h2>
-            <p class="lead mb-4">Join thousands of satisfied customers and local shops on E-CLICK</p>
+            <p class="lead mb-4">Join thousands of satisfied customers and local shops on Ek-Click</p>
             <div class="d-flex gap-3 justify-content-center">
                 <a href="register.php?type=customer" class="btn btn-light btn-lg btn-custom">Start Shopping</a>
                 <a href="register.php?type=vendor" class="btn btn-outline-light btn-lg btn-custom">List Your Shop</a>
@@ -310,21 +451,6 @@ require_once 'config.php';
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="fas fa-truck"></i> E-CLICK</h5>
-                    <p class="mb-0">Your trusted multi-vendor local delivery service platform</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-0">&copy; 2025 E-CLICK. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <?php require_once 'includes/footer.php'; ?>
 </body>
 </html>

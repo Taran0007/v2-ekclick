@@ -5,7 +5,7 @@ $current_page = 'users';
 
 // Check if user is admin
 if (getUserRole() !== 'admin') {
-    redirect('login.php');
+    redirect('/login.php');
 }
 
 // Handle user actions

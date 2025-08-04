@@ -296,4 +296,4 @@ function updateDeliveryStatus(orderId, status) {
 ';
 ?>
 
-<?php require_once '../includes/footer.php'; ?>
+

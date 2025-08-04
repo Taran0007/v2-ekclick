@@ -1,5 +1,5 @@
 <?php
-// E-CLICK Database Setup Script
+// Ek-Click Database Setup Script
 // Run this file once to create the new database and migrate data
 
 // Database configuration
@@ -14,7 +14,7 @@ try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";charset=utf8mb4", DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    echo "<h2>E-CLICK Database Setup</h2>";
+    echo "<h2>Ek-Click Database Setup</h2>";
     
     // Create new database
     echo "<p>Creating database 'eclick'...</p>";
@@ -156,7 +156,7 @@ try {
     echo "<li><strong>Delivery:</strong> delivery1 / 123456</li>";
     echo "<li><strong>Customer:</strong> customer1 / 123456</li>";
     echo "</ul>";
-    echo "<p><a href='index.php'>Go to E-CLICK Homepage</a></p>";
+    echo "<p><a href='index.php'>Go to Ek-Click Homepage</a></p>";
     
 } catch (PDOException $e) {
     echo "<p style='color: red;'>Error: " . $e->getMessage() . "</p>";

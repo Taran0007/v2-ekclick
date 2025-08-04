@@ -1,0 +1,8 @@
+name = "deliverease-api"
+main = "worker.js"
+compatibility_date = "2023-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "deliverease"
+database_id = "86e492d18d85ebc0294238232c94a765"
