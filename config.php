@@ -5,10 +5,11 @@ session_start();
 // Auto-detect BASE URL
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
 $host = $_SERVER['HTTP_HOST'];
-$base_path = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
+$base_path = str_replace('\\', '/', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'));
 
 // Full dynamic BASE URL
-define('BASE_URL', $protocol . "://" . $host . $base_path . '/');
+
+define('BASE_URL', rtrim($protocol . "://" . $host . $base_path, '/') . '/');
 define('SITE_URL', BASE_URL);
 
 // Debug log (optional)
@@ -53,6 +54,22 @@ try {
 define('SITE_NAME', 'Ek-Click');
 
 // === HELPER FUNCTIONS ===
+
+function redirect($url) {
+    // Prevent redirecting to current URL (avoid loop)
+    $current = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    if ($url === $current) {
+        exit("⚠️ Redirect prevented to same URL to avoid infinite loop.");
+    }
+
+    // Validate URL format
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        header("Location: $url");
+        exit;
+    } else {
+        exit("⚠️ Invalid redirect URL: $url");
+    }
+}
 
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
