@@ -6,7 +6,7 @@ putenv('DB_USER=YOUR_DB_USERNAME');
 putenv('DB_PASS=YOUR_DB_PASSWORD');
 
 // Site Settings
-putenv('SITE_URL=https://your-domain.com');
+putenv('SITE_URL=http://localhost/php-deliverease/');
 putenv('APP_ENV=production');
 
 // Email Settings (if needed)
