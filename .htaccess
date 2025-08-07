@@ -1,5 +1,9 @@
 # Enable URL rewriting
 RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ $1.php [L]
+
 
 # Redirect to HTTPS (uncomment in production)
 # RewriteCond %{HTTPS} off
@@ -65,10 +69,10 @@ AddDefaultCharset UTF-8
 
 # PHP settings (if allowed by host)
 <IfModule mod_php7.c>
-    php_value upload_max_filesize 10M
-    php_value post_max_size 10M
-    php_value max_execution_time 300
-    php_value max_input_time 300
+    php_value upload_max_filesize 100M
+    php_value post_max_size 50M
+    php_value max_execution_time 600
+    php_value max_input_time 500
 </IfModule>
 
 # Error pages
