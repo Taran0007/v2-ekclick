@@ -4,7 +4,7 @@ define('API_URL', 'https://your-worker.your-subdomain.workers.dev/api');
 
 // Site configuration
 define('SITE_NAME', 'Ek-Click');
-define('SITE_URL', 'https://your-domain.com');
+define('SITE_URL', 'http://localhost/php-deliverease/');
 define('UPLOAD_PATH', __DIR__ . '/uploads/');
 
 // Session configuration
