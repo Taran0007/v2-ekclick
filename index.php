@@ -285,7 +285,7 @@ require_once 'config.php';
                     <h1 class="display-4 fw-bold mb-4">Everything You Need, Delivered Fast</h1>
                     <p class="lead mb-4">Connect with local shops and get anything delivered quickly by our reliable delivery partners. From groceries to books, electronics to food - we deliver it all!</p>
                     <div class="d-flex gap-3">
-                        <a href="register.php" class="btn btn-light btn-lg btn-custom">Get Started</a>
+                        <a href="<?php echo getBaseUrl(); ?>/register.php" class="btn btn-light btn-lg btn-custom">Get Started</a>
                         <a href="#how-it-works" class="btn btn-outline-light btn-lg btn-custom">Learn More</a>
                     </div>
                 </div>
@@ -366,8 +366,6 @@ require_once 'config.php';
             </div>
         </div>
     </section>
-        </div>
-    </section>
 
     <!-- Stats Section -->
     <section class="stats-section">
@@ -444,9 +442,9 @@ require_once 'config.php';
             <h2 class="mb-4">Ready to Get Started?</h2>
             <p class="lead mb-4">Join thousands of satisfied customers and local shops on Ek-Click</p>
             <div class="d-flex gap-3 justify-content-center">
-                <a href="register.php?type=customer" class="btn btn-light btn-lg btn-custom">Start Shopping</a>
-                <a href="register.php?type=vendor" class="btn btn-outline-light btn-lg btn-custom">List Your Shop</a>
-                <a href="register.php?type=delivery" class="btn btn-outline-light btn-lg btn-custom">Join as Delivery Partner</a>
+                <a href="<?php echo getBaseUrl(); ?>/register.php?type=customer" class="btn btn-light btn-lg btn-custom">Start Shopping</a>
+                <a href="<?php echo getBaseUrl(); ?>/register.php?type=vendor" class="btn btn-outline-light btn-lg btn-custom">List Your Shop</a>
+                <a href="<?php echo getBaseUrl(); ?>/register.php?type=delivery" class="btn btn-outline-light btn-lg btn-custom">Join as Delivery Partner</a>
             </div>
         </div>
     </section>
