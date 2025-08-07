@@ -11,7 +11,7 @@ $username = $_SESSION['username'];
 $full_name = $_SESSION['full_name'];
 
 // Get current page for active menu highlighting
-$current_url = $_SERVER['REQUEST_URI'];
+$current_page = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '.php');
 $current_page = basename($current_url, '.php');
 
 // Get the current directory (admin, vendor, delivery, etc.)
@@ -178,7 +178,6 @@ $current_dir = basename($current_dir);
 
         .theme-toggle i {
             font-size: 1.2rem;
-        }
         }
         
         .user-info {
