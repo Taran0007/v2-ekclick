@@ -1,8 +1,8 @@
 # Enable URL rewriting
 RewriteEngine On
 
-# If your project is in a subfolder (like http://localhost/v2-ekclick/)
-RewriteBase /v2-ekclick/
+# Correct base path if your project is in a subfolder like: http://localhost/php-deliverease/
+RewriteBase /php-deliverease/
 
 # Don't rewrite requests for existing files or directories (including assets)
 RewriteCond %{REQUEST_FILENAME} -f [OR]
@@ -12,10 +12,10 @@ RewriteRule ^ - [L]
 # Route /something to /something.php
 RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
 
-# Route /folder to /folder/index.php
+# Route /folder/ to /folder/index.php
 RewriteRule ^([a-zA-Z0-9_-]+)/$ $1/index.php [L]
 
-# Custom error documents (optional, tweak as needed)
+# Custom error pages
 ErrorDocument 404 /index.php
 ErrorDocument 403 /index.php
 ErrorDocument 500 /index.php
@@ -25,30 +25,27 @@ Options -Indexes
 
 # Protect sensitive files
 <FilesMatch "\.(sql|log|md)$">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </FilesMatch>
 
-<Files config.php>
-    Order allow,deny
-    Deny from all
+<Files "config.php">
+    Require all denied
 </Files>
 
-# Protect includes directory (only if you don't serve assets from here)
+# Protect includes directory (if exists)
 <Directory "/includes">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Directory>
 
 # Set default charset
 AddDefaultCharset UTF-8
 
-# Compression (if supported)
+# Enable compression (if module is available)
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
 </IfModule>
 
-# Cache control for assets
+# Cache control for static assets
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType image/jpg "access plus 1 month"
@@ -63,12 +60,12 @@ AddDefaultCharset UTF-8
 
 # Security headers
 <IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-Frame-Options "SAMEORIGIN"
-    Header set X-XSS-Protection "1; mode=block"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
 </IfModule>
 
-# PHP settings (check your XAMPP PHP module version)
+# PHP settings for XAMPP/local server
 <IfModule mod_php.c>
     php_value upload_max_filesize 32M
     php_value post_max_size 32M
