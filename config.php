@@ -2,6 +2,8 @@
 // First set up environment and URLs
 $is_cloudflare = isset($_SERVER["HTTP_CF_CONNECTING_IP"]) || isset($_SERVER["HTTP_CF_VISITOR"]);
 $environment = getenv('ENVIRONMENT') ?: ($is_cloudflare ? 'production' : 'development');
+// for is localhost on line 104 defined
+$is_localhost = in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
 
 // Debug request information
 error_log("SCRIPT_NAME: " . $_SERVER['SCRIPT_NAME']);
