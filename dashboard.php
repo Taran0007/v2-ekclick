@@ -4,26 +4,33 @@ require_once 'config.php';
 // Check if user is logged in
 if (!isLoggedIn()) {
     redirect(getBaseUrl() . '/login.php');
+    exit;
 }
 
-// Redirect based on user role
+// Get role
 $role = getUserRole();
 
+// Get base URL once for consistency
+$baseUrl = getBaseUrl();
+
+// Role-based redirect
 switch ($role) {
     case 'admin':
-        redirect(getBaseUrl() . '/admin/index.php');
+        redirect($baseUrl . '/admin/index.php');
         break;
     case 'vendor':
-        redirect(getBaseUrl() . '/vendor/index.php');
+        redirect($baseUrl . '/vendor/index.php');
         break;
     case 'delivery':
-        redirect(getBaseUrl() . '/delivery/index.php');
+        redirect($baseUrl . '/delivery/index.php');
         break;
     case 'user':
-        redirect('customer/index.php');
+        redirect($baseUrl . '/customer/index.php'); // Made this consistent with others
         break;
     default:
-        redirect('login.php');
+        redirect($baseUrl . '/login.php'); // Ensures safe fallback
         break;
 }
+
+exit;
 ?>
