@@ -10,6 +10,11 @@ error_log("SCRIPT_NAME: " . $_SERVER['SCRIPT_NAME']);
 error_log("REQUEST_URI: " . $_SERVER['REQUEST_URI']);
 error_log("HTTP_HOST: " . $_SERVER['HTTP_HOST']);
 
+
+// Define Base URL (New by TJ)
+
+define('BASE_URL', 'http://localhost/php-deliverease/'); // Or your live domain
+
 // Set up basic configurations
 if (!defined('SITE_URL')) {
     if ($is_cloudflare) {
