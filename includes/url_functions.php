@@ -1,37 +1,45 @@
 <?php
 // URL and redirection functions
 function getBaseUrl() {
-    return rtrim(SITE_URL, '/');
+    return defined('SITE_URL') ? rtrim(SITE_URL, '/') : '';
 }
 
 function getCurrentUrl() {
-    $protocol = isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'];
-    $uri = $_SERVER['REQUEST_URI'];
-    return $protocol . '://' . $host . $uri;
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    return $protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 }
 
 function redirect($path) {
+    // Determine full redirect URL
     if (strpos($path, 'http') === 0) {
-        $url = $path;
+        $url = $path; // Full external URL
     } else {
-        // Get base URL without any trailing slash
-        $baseUrl = rtrim(getBaseUrl(), '/');
-        // Clean the path by ensuring it starts with a slash but doesn't have double slashes
+        $baseUrl = getBaseUrl();
         $cleanPath = '/' . ltrim($path, '/');
         $url = $baseUrl . $cleanPath;
-        error_log("Redirecting to: " . $url);
     }
+
+    // Check 1: Avoid redirecting to the current page (infinite loop)
+    $currentUrl = getCurrentUrl();
+    if ($currentUrl === $url) {
+        error_log("Redirect skipped: Target is current page");
+        return; // Don't redirect
+    }
+
+    // Check 2: Ensure valid URL format
+    if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        error_log("Invalid redirect URL: " . $url);
+        return; // Invalid URL, skip redirect
+    }
+
+    // Redirect and exit
+    error_log("Redirecting to: " . $url);
     header("Location: " . $url);
     exit();
 }
 
 function getAssetUrl($path) {
-    return getBaseUrl() . '/' . ltrim($path, '/');
-}
-
-function isCloudflare() {
-    return isset($_SERVER["HTTP_CF_CONNECTING_IP"]) || isset($_SERVER["HTTP_CF_VISITOR"]);
+    return (defined('SITE_URL') ? rtrim(SITE_URL, '/') : '') . '/' . ltrim($path, '/');
 }
 
 function getRelativeUrl($path) {
